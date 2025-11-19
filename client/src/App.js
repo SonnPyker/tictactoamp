@@ -33,26 +33,31 @@ function App() {
     newSocket.on("room_updated", (data) => {
       console.log("Room updated:", data);
       console.log("My socket ID:", newSocket.id);
-      console.log("Available players:", Object.keys(data.players));
       setRoomData(data);
 
-      // Find this player's symbol
-      const thisPlayer = data.players[newSocket.id];
+      // Find this player by ID match
+      const allPlayers = Object.values(data.players);
+      const thisPlayer = allPlayers.find(p => p.id === newSocket.id);
+      
       if (thisPlayer) {
         console.log("Player found:", thisPlayer);
         setPlayerSymbol(thisPlayer.symbol);
         setIsSpectator(thisPlayer.isSpectator);
       } else {
-        console.warn("Player not found in room data");
-        // Fallback: find any non-spectator player
-        const players = Object.values(data.players);
-        const nonSpectatorsCount = players.filter(p => !p.isSpectator).length;
-        if (nonSpectatorsCount === 1 && !data.players[newSocket.id]) {
-          // If only 1 non-spectator exists and it's not us, we might be the second one
-          // Reassign based on what symbol is available
-          const existingSymbol = players.find(p => !p.isSpectator)?.symbol;
-          const mySymbol = existingSymbol === "X" ? "O" : "X";
+        console.warn("Player not found, trying fallback");
+        const nonSpectators = allPlayers.filter(p => !p.isSpectator);
+        
+        if (nonSpectators.length === 1) {
+          // We're the second player - assign opposite symbol
+          const firstPlayerSymbol = nonSpectators[0].symbol;
+          const mySymbol = firstPlayerSymbol === "X" ? "O" : "X";
+          console.log("Assigning symbol:", mySymbol);
           setPlayerSymbol(mySymbol);
+          setIsSpectator(false);
+        } else if (nonSpectators.length === 0) {
+          // We're first - assign X
+          console.log("Assigning symbol: X (first player)");
+          setPlayerSymbol("X");
           setIsSpectator(false);
         }
       }

@@ -196,12 +196,11 @@ function getRoomInfo(code) {
     return null;
   }
 
-  const players = Object.values(room.players);
   const gameState = getGameState(room.board, room.currentPlayer);
 
   return {
     code: room.code,
-    players,
+    players: room.players,  // Return players object, not array (keys are socket IDs)
     board: room.board,
     currentPlayer: room.currentPlayer,
     gameState,
