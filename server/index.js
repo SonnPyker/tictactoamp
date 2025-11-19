@@ -9,12 +9,6 @@ const roomManager = require("./roomManager");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
 
 // CORS configuration for production
 const allowedOrigins = [
@@ -30,6 +24,21 @@ const allowedOrigins = [
     ? process.env.ALLOWED_ORIGINS.split(",")
     : []),
 ];
+
+// Socket.IO CORS - must match Express CORS
+const io = socketIo(server, {
+  cors: {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
 
 app.use(
   cors({
