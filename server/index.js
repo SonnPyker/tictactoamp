@@ -22,7 +22,10 @@ const allowedOrigins = [
   "http://localhost:3001",
   "http://127.0.0.1:3000",
   "http://127.0.0.1:3001",
-  // Add your Vercel URL here: "https://your-project.vercel.app"
+  "https://tictactoe.vercel.app",
+  "https://tictactoamp.vercel.app",
+  "https://tictactoe-vercel.app",
+  // Add your exact Vercel URL here if different
   ...(process.env.ALLOWED_ORIGINS
     ? process.env.ALLOWED_ORIGINS.split(",")
     : []),
