@@ -49,7 +49,7 @@ function HomeScreen({ onCreateRoom, onJoinRoom }) {
             <input
               type="range"
               min="3"
-              max="7"
+              max="15"
               value={boardSize}
               onChange={(e) => {
                 const size = parseInt(e.target.value);
@@ -61,7 +61,7 @@ function HomeScreen({ onCreateRoom, onJoinRoom }) {
               }}
             />
             <div style={{ fontSize: "0.85rem", color: "#999", marginTop: "5px" }}>
-              3 - 7
+              3 - 15
             </div>
           </div>
 
