@@ -1,0 +1,14 @@
+{
+  "buildCommand": "cd client && npm run build",
+  "outputDirectory": "client/build",
+  "framework": "create-react-app",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_SOCKET_URL": "@socket_url"
+  }
+}
