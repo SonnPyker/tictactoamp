@@ -120,9 +120,12 @@
   background: white;
   border-radius: 20px;
   padding: 30px;
-  max-width: 900px;
+  max-width: 95vw;
+  width: 100%;
   margin: 0 auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-height: 95vh;
+  overflow-y: auto;
 }
 
 .game-header {
@@ -231,36 +234,46 @@
 
 .game-content {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   margin-top: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .board-section {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 0;
+  width: 100%;
+  max-width: 600px;
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
-  gap: 10px;
-  margin: 20px 0;
+  gap: 8px;
+  margin: 20px auto;
+  max-width: 90vw;
+  overflow-x: auto;
+  padding: 10px;
+  justify-content: center;
 }
 
 .cell {
-  width: 100px;
-  height: 100px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #f0f0f0;
-  font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s;
   color: #333;
+  min-width: 60px;
+  min-height: 60px;
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1rem, 5vw, 2rem);
 }
 
 .cell:hover:not(:disabled) {
@@ -285,15 +298,16 @@
 }
 
 .chat-section {
-  flex: 0 0 250px;
   display: flex;
   flex-direction: column;
   background: #f9f9f9;
   border-radius: 10px;
   padding: 15px;
-  min-height: 400px;
-  max-height: 500px;
+  min-height: 300px;
+  max-height: 400px;
   overflow: hidden;
+  width: 100%;
+  max-width: 300px;
 }
 
 .chat-title {
@@ -430,23 +444,23 @@
 
   .game-content {
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
   }
 
   .chat-section {
-    flex: 1;
+    max-width: 100%;
     min-height: 250px;
   }
 
   .board {
-    grid-template-columns: repeat(3, 80px);
-    gap: 8px;
+    max-width: 100%;
+    gap: 6px;
   }
 
   .cell {
-    width: 80px;
-    height: 80px;
-    font-size: 1.5rem;
+    min-width: 50px;
+    min-height: 50px;
+    font-size: clamp(0.8rem, 4vw, 1.5rem);
   }
 
   .players-info {
@@ -468,18 +482,19 @@
   }
 
   .game-screen {
-    padding: 20px;
+    padding: 15px;
+    border-radius: 15px;
   }
 
   .board {
-    grid-template-columns: repeat(3, 70px);
-    gap: 8px;
+    max-width: 100%;
+    gap: 5px;
   }
 
   .cell {
-    width: 70px;
-    height: 70px;
-    font-size: 1.3rem;
+    min-width: 45px;
+    min-height: 45px;
+    font-size: clamp(0.7rem, 3vw, 1.2rem);
   }
 
   .game-header h2 {
