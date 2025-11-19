@@ -61,9 +61,9 @@ io.on("connection", (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   // Create a new room
-  socket.on("create_room", (nickname, callback) => {
+  socket.on("create_room", (nickname, boardSize, winCondition, callback) => {
     try {
-      const room = roomManager.createRoom(socket.id, nickname);
+      const room = roomManager.createRoom(socket.id, nickname, boardSize, winCondition);
       roomManager.addPlayerToRoom(room.code, socket.id, nickname);
 
       socketRooms.set(socket.id, room.code);

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Board({ board, onCellClick, disabled }) {
+function Board({ board, onCellClick, disabled, boardSize = 3 }) {
   const handleClick = (index) => {
     if (!disabled && board[index] === null) {
       onCellClick(index);
@@ -8,7 +8,13 @@ function Board({ board, onCellClick, disabled }) {
   };
 
   return (
-    <div className="board">
+    <div
+      className="board"
+      style={{
+        gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
+        gridTemplateRows: `repeat(${boardSize}, 1fr)`,
+      }}
+    >
       {board.map((cell, index) => (
         <button
           key={index}

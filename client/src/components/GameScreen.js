@@ -60,6 +60,9 @@ function GameScreen({
     <div className="game-screen">
       <div className="game-header">
         <h2>Room: {roomCode}</h2>
+        <div style={{ fontSize: "0.9rem", color: "#999", marginBottom: "10px" }}>
+          Board: {roomData.boardSize}x{roomData.boardSize} | Win: {roomData.winCondition} in a row
+        </div>
         <div className="players-info">
           {xPlayer ? (
             <div className="player-info">
@@ -138,6 +141,7 @@ function GameScreen({
                 board={roomData.board}
                 onCellClick={onMakeMove}
                 disabled={!isMyTurn || isSpectator}
+                boardSize={roomData.boardSize}
               />
 
               {isGameOver && playerCount >= 2 && (

@@ -11,7 +11,7 @@ function generateRoomCode() {
 }
 
 // Create a new room
-function createRoom(hostId, hostNickname) {
+function createRoom(hostId, hostNickname, boardSize = 3, winCondition = 3) {
   let code;
   let attempts = 0;
 
@@ -25,12 +25,15 @@ function createRoom(hostId, hostNickname) {
     throw new Error("Could not generate unique room code");
   }
 
+  const totalCells = boardSize * boardSize;
   const room = {
     code,
     hostId,
     hostNickname,
     players: {},
-    board: Array(9).fill(null),
+    boardSize,
+    winCondition,
+    board: Array(totalCells).fill(null),
     currentPlayer: "X",
     messages: [],
     createdAt: Date.now(),
@@ -161,7 +164,8 @@ function resetGame(code) {
     return { success: false, error: "Room not found" };
   }
 
-  room.board = Array(9).fill(null);
+  const totalCells = room.boardSize * room.boardSize;
+  room.board = Array(totalCells).fill(null);
   // Alternate who goes first each round
   room.currentPlayer = room.currentPlayer === "X" ? "O" : "X";
   // Track rounds for alternating starts
@@ -196,12 +200,19 @@ function getRoomInfo(code) {
     return null;
   }
 
-  const gameState = getGameState(room.board, room.currentPlayer);
+  const gameState = getGameState(
+    room.board,
+    room.currentPlayer,
+    room.boardSize,
+    room.winCondition
+  );
 
   return {
     code: room.code,
     players: room.players,  // Return players object, not array (keys are socket IDs)
     board: room.board,
+    boardSize: room.boardSize,
+    winCondition: room.winCondition,
     currentPlayer: room.currentPlayer,
     gameState,
     messages: room.messages,

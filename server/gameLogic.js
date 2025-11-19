@@ -1,36 +1,76 @@
 // Game logic for Tic-Tac-Toe
 
-function checkWinner(board) {
+function checkWinner(board, boardSize = 3, winCondition = 3) {
   // Check rows
-  for (let i = 0; i < 3; i++) {
-    if (
-      board[i * 3] &&
-      board[i * 3] === board[i * 3 + 1] &&
-      board[i * 3] === board[i * 3 + 2]
-    ) {
-      return board[i * 3];
+  for (let row = 0; row < boardSize; row++) {
+    for (let col = 0; col <= boardSize - winCondition; col++) {
+      const firstSymbol = board[row * boardSize + col];
+      if (!firstSymbol) continue;
+
+      let match = true;
+      for (let i = 1; i < winCondition; i++) {
+        if (board[row * boardSize + col + i] !== firstSymbol) {
+          match = false;
+          break;
+        }
+      }
+      if (match) return firstSymbol;
     }
   }
 
   // Check columns
-  for (let i = 0; i < 3; i++) {
-    if (
-      board[i] &&
-      board[i] === board[i + 3] &&
-      board[i] === board[i + 6]
-    ) {
-      return board[i];
+  for (let col = 0; col < boardSize; col++) {
+    for (let row = 0; row <= boardSize - winCondition; row++) {
+      const firstSymbol = board[row * boardSize + col];
+      if (!firstSymbol) continue;
+
+      let match = true;
+      for (let i = 1; i < winCondition; i++) {
+        if (board[(row + i) * boardSize + col] !== firstSymbol) {
+          match = false;
+          break;
+        }
+      }
+      if (match) return firstSymbol;
     }
   }
 
   // Check diagonal (top-left to bottom-right)
-  if (board[0] && board[0] === board[4] && board[0] === board[8]) {
-    return board[0];
+  for (let row = 0; row <= boardSize - winCondition; row++) {
+    for (let col = 0; col <= boardSize - winCondition; col++) {
+      const firstSymbol = board[row * boardSize + col];
+      if (!firstSymbol) continue;
+
+      let match = true;
+      for (let i = 1; i < winCondition; i++) {
+        if (
+          board[(row + i) * boardSize + col + i] !== firstSymbol
+        ) {
+          match = false;
+          break;
+        }
+      }
+      if (match) return firstSymbol;
+    }
   }
 
   // Check diagonal (top-right to bottom-left)
-  if (board[2] && board[2] === board[4] && board[2] === board[6]) {
-    return board[2];
+  for (let row = 0; row <= boardSize - winCondition; row++) {
+    for (let col = winCondition - 1; col < boardSize; col++) {
+      const firstSymbol = board[row * boardSize + col];
+      if (!firstSymbol) continue;
+
+      let match = true;
+      for (let i = 1; i < winCondition; i++) {
+        if (
+          board[(row + i) * boardSize + (col - i)] !== firstSymbol
+        ) {
+          match = false;
+          break;
+        }
+      }
+      if (match) return firstSymbol;
+    }
   }
 
   return null;
@@ -40,12 +80,12 @@ function isBoardFull(board) {
   return board.every((cell) => cell !== null);
 }
 
-function isGameOver(board) {
-  return checkWinner(board) !== null || isBoardFull(board);
+function isGameOver(board, boardSize = 3, winCondition = 3) {
+  return checkWinner(board, boardSize, winCondition) !== null || isBoardFull(board);
 }
 
-function getGameState(board, currentPlayer) {
-  const winner = checkWinner(board);
+function getGameState(board, currentPlayer, boardSize = 3, winCondition = 3) {
+  const winner = checkWinner(board, boardSize, winCondition);
   const isFull = isBoardFull(board);
 
   if (winner) {

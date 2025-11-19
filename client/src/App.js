@@ -79,13 +79,13 @@ function App() {
     };
   }, []);
 
-  const handleCreateRoom = (playerNickname) => {
+  const handleCreateRoom = (playerNickname, boardSize, winCondition) => {
     if (!socket || !playerNickname.trim()) {
       setError("Please enter a nickname");
       return;
     }
 
-    socket.emit("create_room", playerNickname, (response) => {
+    socket.emit("create_room", playerNickname, boardSize, winCondition, (response) => {
       if (response.success) {
         setNickname(playerNickname);
         setRoomCode(response.roomCode);
