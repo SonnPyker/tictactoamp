@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Board from "./Board";
-import Chat from "./Chat";
+import ChatBubble from "./ChatBubble";
 
 function GameScreen({
   roomCode,
@@ -160,16 +160,16 @@ function GameScreen({
                 Leave Room
               </button>
             </div>
-
-            <Chat
-              messages={roomData.messages}
-              nickname={nickname}
-              onSendMessage={handleSendMessage}
-              messageInput={messageInput}
-              setMessageInput={setMessageInput}
-              messagesEndRef={messagesEndRef}
-            />
           </div>
+
+          <ChatBubble
+            messages={roomData.messages}
+            nickname={nickname}
+            onSendMessage={handleSendMessage}
+            messageInput={messageInput}
+            setMessageInput={setMessageInput}
+            messagesEndRef={messagesEndRef}
+          />
         </>
       ) : (
         <div style={{ textAlign: "center", marginTop: "40px" }}>
