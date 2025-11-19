@@ -32,13 +32,29 @@ function App() {
 
     newSocket.on("room_updated", (data) => {
       console.log("Room updated:", data);
+      console.log("My socket ID:", newSocket.id);
+      console.log("Available players:", Object.keys(data.players));
       setRoomData(data);
 
       // Find this player's symbol
       const thisPlayer = data.players[newSocket.id];
       if (thisPlayer) {
+        console.log("Player found:", thisPlayer);
         setPlayerSymbol(thisPlayer.symbol);
         setIsSpectator(thisPlayer.isSpectator);
+      } else {
+        console.warn("Player not found in room data");
+        // Fallback: find any non-spectator player
+        const players = Object.values(data.players);
+        const nonSpectatorsCount = players.filter(p => !p.isSpectator).length;
+        if (nonSpectatorsCount === 1 && !data.players[newSocket.id]) {
+          // If only 1 non-spectator exists and it's not us, we might be the second one
+          // Reassign based on what symbol is available
+          const existingSymbol = players.find(p => !p.isSpectator)?.symbol;
+          const mySymbol = existingSymbol === "X" ? "O" : "X";
+          setPlayerSymbol(mySymbol);
+          setIsSpectator(false);
+        }
       }
     });
 

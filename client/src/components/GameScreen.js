@@ -43,8 +43,11 @@ function GameScreen({
 
   const gameState = roomData.gameState;
   const isGameOver = gameState.status === "finished";
+  
+  // Use playerSymbol from props, or derive from roomData if needed
+  const currentPlayerSymbol = playerSymbol;
   const isMyTurn =
-    playerSymbol && roomData.currentPlayer === playerSymbol && !isGameOver;
+    currentPlayerSymbol && roomData.currentPlayer === currentPlayerSymbol && !isGameOver;
 
   const handleSendMessage = () => {
     if (messageInput.trim()) {
