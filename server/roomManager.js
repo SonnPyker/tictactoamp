@@ -162,7 +162,10 @@ function resetGame(code) {
   }
 
   room.board = Array(9).fill(null);
-  room.currentPlayer = "X";
+  // Alternate who goes first each round
+  room.currentPlayer = room.currentPlayer === "X" ? "O" : "X";
+  // Track rounds for alternating starts
+  room.roundCount = (room.roundCount || 0) + 1;
 
   return {
     success: true,

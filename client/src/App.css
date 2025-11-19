@@ -292,6 +292,8 @@
   border-radius: 10px;
   padding: 15px;
   min-height: 400px;
+  max-height: 500px;
+  overflow: hidden;
 }
 
 .chat-title {
@@ -304,8 +306,28 @@
 .chat-messages {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   margin-bottom: 15px;
-  padding: 10px 0;
+  padding: 10px 5px;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc #f9f9f9;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 
 .chat-message {
