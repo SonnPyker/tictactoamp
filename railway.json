@@ -1,0 +1,11 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "buildCommand": "cd server && npm install"
+  },
+  "deploy": {
+    "startCommand": "cd server && npm start",
+    "restartPolicyMaxRetries": 5,
+    "restartPolicyWindowMs": 60000
+  }
+}
